@@ -1,0 +1,18 @@
+{
+  "name": "api-gateway-localdev",
+  "version": "0.0.1",
+  "description": "simulate AWS API Gateway for dev in your local",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "api-gateway-mapping-template": "0.0.6"
+  },
+  "devDependencies": {
+    "express": "^4.13.3",
+    "mocha": "^2.3.4"
+  }
+}
