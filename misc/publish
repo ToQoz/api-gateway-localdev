@@ -7,9 +7,8 @@ which jq
 
 bin=$(npm bin)
 
-$bin/trash node_modules &>/dev/null
+ls node_modules && rm -r node_modules
 git pull --rebase
-npm install
 npm test
 cp package.json _package.json
 bump=`$bin/conventional-recommended-bump -p angular`

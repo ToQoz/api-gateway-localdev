@@ -1,6 +1,6 @@
 {
   "name": "api-gateway-localdev",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "simulate AWS API Gateway for dev in your local",
   "main": "index.js",
   "scripts": {
