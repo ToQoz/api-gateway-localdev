@@ -53,7 +53,7 @@ var apiGatewayRoutes = [
       "application/json": '{"username": "$input.params(\'username\')"}'
     },
     responseTemplates: {
-      "text/html": "<h1>$input.path('$.name')</h1>"
+      "text/html": "$input.path('$')"
     },
   }
 ];
