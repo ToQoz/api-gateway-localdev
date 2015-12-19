@@ -81,7 +81,7 @@ describe('api-gateway-localdev', function() {
 
       it("returns 200", function(done) {
         req("GET", "/users.json", "", function(res, data) {
-          assert(res.statusCode === 200);
+          assert.equal(res.statusCode, 200);
           done();
         });
       });
@@ -90,7 +90,7 @@ describe('api-gateway-localdev', function() {
         req("GET", "/users.json", "", function(res, data) {
           var users = JSON.parse(data);
           assert.deepEqual(users, User.all());
-          assert(users[0].name, "ToQoz");
+          assert.equal(users[0].name, "ToQoz");
           done();
         });
       });
@@ -99,7 +99,7 @@ describe('api-gateway-localdev', function() {
     describe("POST /users.json", function() {
       it("returns 201", function(done) {
         req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
-          assert(res.statusCode, 201);
+          assert.equal(res.statusCode, 201);
           done();
         });
       });
@@ -108,7 +108,7 @@ describe('api-gateway-localdev', function() {
         var oldCount = User.count();
 
         req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
-          assert(User.count(), oldCount + 1);
+          assert.equal(User.count(), oldCount + 1);
           done();
         });
       });
@@ -116,7 +116,7 @@ describe('api-gateway-localdev', function() {
       it("returns the created user as JSON", function(done) {
         req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
           var user = JSON.parse(data);
-          assert(user.name, "ToQoz");
+          assert.equal(user.name, "ToQoz");
           done();
         });
       });
@@ -129,14 +129,14 @@ describe('api-gateway-localdev', function() {
 
       it("returns 200", function(done) {
         req("GET", "/users/ToQoz.html", '', function(res, data) {
-          assert(res.statusCode, 200);
+          assert.equal(res.statusCode, 200);
           done();
         });
       });
 
       it("returns the user as HTML", function(done) {
         req("GET", "/users/ToQoz.html", "", function(res, data) {
-          assert(data, "<h1>ToQoz</h1>");
+          assert.equal(data, "<h1>ToQoz</h1>");
           done();
         });
       });
@@ -149,14 +149,14 @@ describe('api-gateway-localdev', function() {
 
       it("returns 200", function(done) {
         req("GET", "/v2/users/ToQoz.html", '', function(res, data) {
-          assert(res.statusCode, 200);
+          assert.equal(res.statusCode, 200);
           done();
         });
       });
 
       it("returns the user as HTML", function(done) {
         req("GET", "/v2/users/ToQoz.html", "", function(res, data) {
-          assert(data, "<h1>ToQoz</h1>");
+          assert.equal(data, "<h1>ToQoz</h1>");
           done();
         });
       });
