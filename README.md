@@ -10,28 +10,44 @@ npm install api-gateway-localdev
 
 ## Usage
 
+app.js:
+
 ```node
 var express = require('express');
 var apiGatewayLocal = require('api-gateway-localdev');
 
 var app = apiGatewayLocal(express(), [
   {
-    lambda: handler,
+    lambda: require("./lambda").handler,
     method: "GET",
-    path: "/users.json",
+    path: "/users/:username.json",
     statusCode: 200,
-    requestTemplates: {},
+    requestTemplates: {
+      "application/json": '{"username": "$input.params(\'username\')"}'
+    },
     responseTemplates: {},
   }
 ]);
 
-function handler(event, context) {
-    var users;
-    // ...
-    context.done(null, users);
+app.listen(8000);
+```
+
+lambda.js:
+
+```node
+exports.handler = function (event, context) {
+  context.done(null, findUser(event.username));
 }
 
-app.listen(8000);
+function findUser(username) {
+  // ...
+}
+```
+
+***
+
+```
+$ node ./app.js
 ```
 
 ## API
