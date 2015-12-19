@@ -7,7 +7,7 @@ which jq
 
 bin=$(npm bin)
 
-ls node_modules && rm -r node_modules
+ls node_modules 2> /dev/null 1>&2 && rm -r node_modules
 git pull --rebase
 npm test
 cp package.json _package.json
