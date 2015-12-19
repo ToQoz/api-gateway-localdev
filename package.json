@@ -13,7 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "api-gateway-mapping-template": "0.0.6"
+    "api-gateway-mapping-template": "0.0.7"
   },
   "devDependencies": {
     "conventional-changelog": "^0.5.1",
