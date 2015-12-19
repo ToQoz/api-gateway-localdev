@@ -2,6 +2,10 @@
   "name": "api-gateway-localdev",
   "version": "0.0.1",
   "description": "simulate AWS API Gateway for dev in your local",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/ToQoz/api-gateway-localdev.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "mocha"
