@@ -65,104 +65,106 @@ var server;
 var User = require('./_user');
 
 describe('api-gateway-localdev', function() {
-  before(function() {
-    server = app.listen(port);
-  });
-
-  afterEach(function() {
-    User.cleanup();
-  });
-
-  describe("GET /users.json", function() {
-    beforeEach(function() {
-      User.create("ToQoz");
+  describe('sample app', function() {
+    before(function() {
+      server = app.listen(port);
     });
 
-    it("returns 200", function(done) {
-      req("GET", "/users.json", "", function(res, data) {
-        assert(res.statusCode === 200);
-        done();
+    afterEach(function() {
+      User.cleanup();
+    });
+
+    describe("GET /users.json", function() {
+      beforeEach(function() {
+        User.create("ToQoz");
+      });
+
+      it("returns 200", function(done) {
+        req("GET", "/users.json", "", function(res, data) {
+          assert(res.statusCode === 200);
+          done();
+        });
+      });
+
+      it("returns all users as JSON", function(done) {
+        req("GET", "/users.json", "", function(res, data) {
+          var users = JSON.parse(data);
+          assert.deepEqual(users, User.all());
+          assert(users[0].name, "ToQoz");
+          done();
+        });
       });
     });
 
-    it("returns all users as JSON", function(done) {
-      req("GET", "/users.json", "", function(res, data) {
-        var users = JSON.parse(data);
-        assert.deepEqual(users, User.all());
-        assert(users[0].name, "ToQoz");
-        done();
+    describe("POST /users.json", function() {
+      it("returns 201", function(done) {
+        req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
+          assert(res.statusCode, 201);
+          done();
+        });
       });
-    });
-  });
 
-  describe("POST /users.json", function() {
-    it("returns 201", function(done) {
-      req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
-        assert(res.statusCode, 201);
-        done();
+      it("creates a user", function(done) {
+        var oldCount = User.count();
+
+        req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
+          assert(User.count(), oldCount + 1);
+          done();
+        });
       });
-    });
 
-    it("creates a user", function(done) {
-      var oldCount = User.count();
-
-      req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
-        assert(User.count(), oldCount + 1);
-        done();
-      });
-    });
-
-    it("returns the created user as JSON", function(done) {
-      req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
-        var user = JSON.parse(data);
-        assert(user.name, "ToQoz");
-        done();
-      });
-    });
-  });
-
-  describe("GET /users/:username.html", function() {
-    beforeEach(function() {
-      User.create("ToQoz");
-    });
-
-    it("returns 200", function(done) {
-      req("GET", "/users/ToQoz.html", '', function(res, data) {
-        assert(res.statusCode, 200);
-        done();
+      it("returns the created user as JSON", function(done) {
+        req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
+          var user = JSON.parse(data);
+          assert(user.name, "ToQoz");
+          done();
+        });
       });
     });
 
-    it("returns the user as HTML", function(done) {
-      req("GET", "/users/ToQoz.html", "", function(res, data) {
-        assert(data, "<h1>ToQoz</h1>");
-        done();
+    describe("GET /users/:username.html", function() {
+      beforeEach(function() {
+        User.create("ToQoz");
+      });
+
+      it("returns 200", function(done) {
+        req("GET", "/users/ToQoz.html", '', function(res, data) {
+          assert(res.statusCode, 200);
+          done();
+        });
+      });
+
+      it("returns the user as HTML", function(done) {
+        req("GET", "/users/ToQoz.html", "", function(res, data) {
+          assert(data, "<h1>ToQoz</h1>");
+          done();
+        });
       });
     });
-  });
 
-  describe("GET /v2/users/:username.html", function() {
-    beforeEach(function() {
-      User.create("ToQoz");
-    });
+    describe("GET /v2/users/:username.html", function() {
+      beforeEach(function() {
+        User.create("ToQoz");
+      });
 
-    it("returns 200", function(done) {
-      req("GET", "/v2/users/ToQoz.html", '', function(res, data) {
-        assert(res.statusCode, 200);
-        done();
+      it("returns 200", function(done) {
+        req("GET", "/v2/users/ToQoz.html", '', function(res, data) {
+          assert(res.statusCode, 200);
+          done();
+        });
+      });
+
+      it("returns the user as HTML", function(done) {
+        req("GET", "/v2/users/ToQoz.html", "", function(res, data) {
+          assert(data, "<h1>ToQoz</h1>");
+          done();
+        });
       });
     });
 
-    it("returns the user as HTML", function(done) {
-      req("GET", "/v2/users/ToQoz.html", "", function(res, data) {
-        assert(data, "<h1>ToQoz</h1>");
-        done();
-      });
+    after(function() {
+      server.close();
     });
-  });
-
-  after(function() {
-    server.close();
   });
 });
 
