@@ -18,9 +18,9 @@ npm --no-git-tag-version version ${1:-$bump} &>/dev/null
 $bin/conventional-changelog -i CHANGELOG.md -w -p angular
 git add CHANGELOG.md
 version=`cat package.json | cat package.json | jq -r '.version'`
-git commit -m "docs(CHANGELOG): $version" &&
-mv -f _package.json package.json &&
+git commit -m "docs(CHANGELOG): $version"
+mv -f _package.json package.json
 npm version ${1:-$bump} -m "chore(release): %s"
-git push --follow-tags &&
+git push --follow-tags
 $bin/conventional-github-releaser -p angular
 npm publish
