@@ -3,11 +3,12 @@ var fs = require('fs');
 var mappingTemplate = require("api-gateway-mapping-template");
 
 // - Parameters
+//   - app - `instance of express`
 //   - routes - `Array<map>`
 //     - lambda - `Function`
 //     - method - `String`
 //     - path - `String`
-//     - statusCode - `String`
+//     - statusCode - `Number`
 //     - requestTemplates - `map<String, String|Buffer>`
 //     - responseTemplates - `map<String, String|Buffer>`
 module.exports = function(app, routes) {
