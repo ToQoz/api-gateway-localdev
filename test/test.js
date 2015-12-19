@@ -153,7 +153,7 @@ describe('api-gateway-localdev', function() {
       });
     });
 
-    it("returns the user as JSON", function(done) {
+    it("returns the user as HTML", function(done) {
       req("GET", "/v2/users/ToQoz.html", "", function(res, data) {
         assert(data, "<h1>ToQoz</h1>");
         done();
