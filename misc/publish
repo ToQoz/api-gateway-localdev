@@ -9,6 +9,7 @@ bin=$(npm bin)
 
 ls node_modules 2> /dev/null 1>&2 && rm -r node_modules
 git pull --rebase
+npm install
 npm test
 cp package.json _package.json
 bump=`$bin/conventional-recommended-bump -p angular`
