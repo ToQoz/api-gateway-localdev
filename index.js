@@ -48,7 +48,11 @@ module.exports = function(app, routes) {
           } else {
             try {
               statusCode = route.statusCode;
-              contentType = req.accepts(Object.keys(route.responseTemplates)).contentType || "application/json";
+              if (Object.keys(route.responseTemplates).length > 0) {
+                contentType = req.accepts(Object.keys(route.responseTemplates)) || "application/json";
+              } else {
+                contentType = "application/json";
+              }
               responseTemplate = route.responseTemplates[contentType.toLowerCase()] || "$input.json('$')";
             } catch(error) {
               this.done(error, null);
@@ -60,8 +64,8 @@ module.exports = function(app, routes) {
             payload: JSON.stringify(obj)
           });
 
+          res.setHeader("Content-Type", contentType);
           res
-            .set('content-type', contentType)
             .status(statusCode)
             .send(responseBody);
         },
