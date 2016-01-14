@@ -1,3 +1,13 @@
+<a name="0.0.3"></a>
+## [0.0.3](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.2...v0.0.3) (2016-01-14)
+
+
+### Features
+
+* **api-gateway-localdev:** use API Gateway style path parameters({param}) ([45d779d](https://github.com/ToQoz/api-gateway-localdev/commit/45d779d))
+
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.1...v0.0.2) (2015-12-19)
 
