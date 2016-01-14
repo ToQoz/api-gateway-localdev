@@ -22,7 +22,28 @@ module.exports = function(app, routes) {
   });
 
   routes.forEach(function(route) {
-    app[route.method.toLowerCase()](route.path, function(req, res) {
+    paramRegexp = /^{[a-zA-Z0-9._-]+}$/
+    normalRegexp = /^[a-zA-Z0-9._-]+$/
+
+    var path = route.path
+      .split("/")
+      .map(function(segment) {
+        if (segment !== "" && !normalRegexp.test(segment) && !paramRegexp.test(segment)) {
+          // follows the API Gateway's rule
+          throw new Error("Resource's path part only allow a-zA-Z0-9._- and curly braces at the begining and the end.");
+        }
+
+        // converts to express style param
+        if (paramRegexp.test(segment)) {
+          return ":" + segment.replace(/^{/, "").replace(/}$/, "")
+        }
+
+        return segment;
+      })
+      .join("/");
+
+      console.dir(path);
+    app[route.method.toLowerCase()](path, function(req, res) {
       var requestContentType = req.headers['content-type'] || "application/json";
       var requestTemplate = route.requestTemplates[requestContentType.toLowerCase()] || "$input.json('$')";
 

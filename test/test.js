@@ -9,7 +9,7 @@ var apiGatewayRoutes = [
   {
     lambda: lambdas.users.index,
     method: "GET",
-    path: "/users.json",
+    path: "/json/users",
     statusCode: 200,
     requestTemplates: {},
     responseTemplates: {},
@@ -17,7 +17,7 @@ var apiGatewayRoutes = [
   {
     lambda: lambdas.users.create,
     method: "POST",
-    path: "/users.json",
+    path: "/json/users",
     statusCode: 201,
     requestTemplates: {},
     responseTemplates: {},
@@ -25,7 +25,7 @@ var apiGatewayRoutes = [
   {
     lambda: lambdas.users.show,
     method: "GET",
-    path: "/users/:username.json",
+    path: "/json/users/{username}",
     statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
@@ -35,7 +35,7 @@ var apiGatewayRoutes = [
   {
     lambda: lambdas.users.showHtml,
     method: "GET",
-    path: "/users/:username.html",
+    path: "/html/users/{username}",
     statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
@@ -47,7 +47,7 @@ var apiGatewayRoutes = [
   {
     lambda: lambdas.users.showHtml_v2,
     method: "GET",
-    path: "/v2/users/:username.html",
+    path: "/html/v2/users/{username}",
     statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
@@ -74,20 +74,20 @@ describe('api-gateway-localdev', function() {
       User.cleanup();
     });
 
-    describe("GET /users.json", function() {
+    describe("GET /json/users", function() {
       beforeEach(function() {
         User.create("ToQoz");
       });
 
       it("returns 200", function(done) {
-        req("GET", "/users.json", "", function(res, data) {
+        req("GET", "/json/users", "", function(res, data) {
           assert.equal(res.statusCode, 200);
           done();
         });
       });
 
       it("returns all users as JSON", function(done) {
-        req("GET", "/users.json", "", function(res, data) {
+        req("GET", "/json/users", "", function(res, data) {
           var users = JSON.parse(data);
           assert.deepEqual(users, User.all());
           assert.equal(users[0].name, "ToQoz");
@@ -96,9 +96,9 @@ describe('api-gateway-localdev', function() {
       });
     });
 
-    describe("POST /users.json", function() {
+    describe("POST /json/users", function() {
       it("returns 201", function(done) {
-        req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
+        req("POST", "/json/users", '{"username": "ToQoz"}', function(res, data) {
           assert.equal(res.statusCode, 201);
           done();
         });
@@ -107,14 +107,14 @@ describe('api-gateway-localdev', function() {
       it("creates a user", function(done) {
         var oldCount = User.count();
 
-        req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
+        req("POST", "/json/users", '{"username": "ToQoz"}', function(res, data) {
           assert.equal(User.count(), oldCount + 1);
           done();
         });
       });
 
       it("returns the created user as JSON", function(done) {
-        req("POST", "/users.json", '{"username": "ToQoz"}', function(res, data) {
+        req("POST", "/json/users", '{"username": "ToQoz"}', function(res, data) {
           var user = JSON.parse(data);
           assert.equal(user.name, "ToQoz");
           done();
@@ -122,40 +122,40 @@ describe('api-gateway-localdev', function() {
       });
     });
 
-    describe("GET /users/:username.html", function() {
+    describe("GET /html/users/{username}", function() {
       beforeEach(function() {
         User.create("ToQoz");
       });
 
       it("returns 200", function(done) {
-        req("GET", "/users/ToQoz.html", '', function(res, data) {
+        req("GET", "/html/users/ToQoz", '', function(res, data) {
           assert.equal(res.statusCode, 200);
           done();
         });
       });
 
       it("returns the user as HTML", function(done) {
-        req("GET", "/users/ToQoz.html", "", function(res, data) {
+        req("GET", "/html/users/ToQoz", "", function(res, data) {
           assert.equal(data, "<h1>ToQoz</h1>");
           done();
         });
       });
     });
 
-    describe("GET /v2/users/:username.html", function() {
+    describe("GET /html/v2/users/{username}", function() {
       beforeEach(function() {
         User.create("ToQoz");
       });
 
       it("returns 200", function(done) {
-        req("GET", "/v2/users/ToQoz.html", '', function(res, data) {
+        req("GET", "/html/v2/users/ToQoz", '', function(res, data) {
           assert.equal(res.statusCode, 200);
           done();
         });
       });
 
       it("returns the user as HTML", function(done) {
-        req("GET", "/v2/users/ToQoz.html", "", function(res, data) {
+        req("GET", "/html/v2/users/ToQoz", "", function(res, data) {
           assert.equal(data, "<h1>ToQoz</h1>");
           done();
         });

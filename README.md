@@ -20,7 +20,7 @@ var app = apiGatewayLocal(express(), [
   {
     lambda: require("./lambda").handler,
     method: "GET",
-    path: "/users/:username.json",
+    path: "/users/{username}",
     statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
