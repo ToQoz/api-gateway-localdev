@@ -42,7 +42,6 @@ module.exports = function(app, routes) {
       })
       .join("/");
 
-      console.dir(path);
     app[route.method.toLowerCase()](path, function(req, res) {
       var requestContentType = req.headers['content-type'] || "application/json";
       var requestTemplate = route.requestTemplates[requestContentType.toLowerCase()] || "$input.json('$')";
