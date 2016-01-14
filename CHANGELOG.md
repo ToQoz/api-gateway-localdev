@@ -1,3 +1,13 @@
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.3...v0.0.4) (2016-01-14)
+
+
+### Bug Fixes
+
+* **api-gateway-loaldev:** shut up debug logs... ([4ea2cb9](https://github.com/ToQoz/api-gateway-localdev/commit/4ea2cb9))
+
+
+
 <a name="0.0.3"></a>
 ## [0.0.3](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.2...v0.0.3) (2016-01-14)
 
