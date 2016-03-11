@@ -58,7 +58,7 @@ module.exports = function(app, routes) {
       var context = {
         done: function(err, obj) {
           obj = obj || "";
-          var contentType, responseTemplate, responseBody, statusCode;
+          var contentType, responseTemplates, responseTemplate, responseBody, statusCode;
 
           if (err) {
             statusCode = 400;
@@ -66,17 +66,14 @@ module.exports = function(app, routes) {
             responseTemplate = "$input.json('$')";
             obj = {error: err.toString()};
           } else {
-            try {
-              statusCode = route.statusCode;
-              if (Object.keys(route.responseTemplates).length > 0) {
-                contentType = req.accepts(Object.keys(route.responseTemplates)) || "application/json";
-              } else {
-                contentType = "application/json";
-              }
-              responseTemplate = route.responseTemplates[contentType.toLowerCase()] || "$input.json('$')";
-            } catch(error) {
-              this.done(error, null);
+            statusCode = route.statusCode;
+            responseTemplates = route.responseTemplates || {};
+            if (Object.keys(responseTemplates).length > 0) {
+              contentType = req.accepts(Object.keys(responseTemplates)) || "application/json";
+            } else {
+              contentType = "application/json";
             }
+            responseTemplate = responseTemplates[contentType.toLowerCase()] || "$input.json('$')";
           }
 
           responseBody = mappingTemplate({
