@@ -1,3 +1,15 @@
+<a name="0.0.5"></a>
+## [0.0.5](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.4...v0.0.5) (2016-03-14)
+
+
+### Bug Fixes
+
+* **api-gateway-localdev:** fix bug on selecting responseTemplate ([9bd4548](https://github.com/ToQoz/api-gateway-localdev/commit/9bd4548))
+* **api-gateway-localdev:** prefer path without params than with params ([cebbfca](https://github.com/ToQoz/api-gateway-localdev/commit/cebbfca))
+* **test:** fix multiple calling done ([59eae5f](https://github.com/ToQoz/api-gateway-localdev/commit/59eae5f))
+
+
+
 <a name="0.0.4"></a>
 ## [0.0.4](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.3...v0.0.4) (2016-01-14)
 
