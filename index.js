@@ -21,10 +21,19 @@ module.exports = function(app, routes) {
     });
   });
 
-  routes.forEach(function(route) {
-    paramRegexp = /^{[a-zA-Z0-9._-]+}$/
-    normalRegexp = /^[a-zA-Z0-9._-]+$/
+  paramRegexp = /^{[a-zA-Z0-9._-]+}$/
+  normalRegexp = /^[a-zA-Z0-9._-]+$/
 
+  routes.sort(function(a, b) {
+    var al = a.path.length;
+    if (a.path.indexOf("{") !== -1) al += 999;
+    var bl = b.path.length;
+    if (b.path.indexOf("{") !== -1) bl += 999;
+
+    return al - bl;
+  });
+
+  routes.forEach(function(route) {
     var path = route.path
       .split("/")
       .map(function(segment) {

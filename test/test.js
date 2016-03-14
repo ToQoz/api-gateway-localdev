@@ -7,6 +7,34 @@ var apiGatewayLocal = require("..");
 var lambdas = require('./_lambdas');
 var apiGatewayRoutes = [
   {
+    lambda: function(_, context) { context.done(null, "all"); },
+    method: "GET",
+    path: "/{all}",
+    statusCode: 200,
+    requestTemplates: {},
+    responseTemplates: {
+      "text/plain": "$input.path('$')"
+    },
+  },
+  {
+    lambda: function(_, context) { context.done(null, "hello"); },
+    method: "GET",
+    path: "/hello",
+    statusCode: 200,
+    requestTemplates: {},
+    responseTemplates: {
+      "text/plain": "$input.path('$')"
+    }
+  },
+  {
+    lambda: lambdas.users.index,
+    method: "GET",
+    path: "/json/users",
+    statusCode: 200,
+    requestTemplates: {},
+    responseTemplates: {},
+  },
+  {
     lambda: lambdas.users.index,
     method: "GET",
     path: "/json/users",
@@ -72,6 +100,18 @@ describe('api-gateway-localdev', function() {
 
     afterEach(function() {
       User.cleanup();
+    });
+
+    it("path without params should be preferred than with params", function(done) {
+      req("GET", "/hello", "", function(res, data) {
+        assert.equal(data, "hello");
+        done();
+
+        req("GET", "/all", "", function(res, data) {
+          assert.equal(data, "all");
+          done();
+        });
+      });
     });
 
     describe("GET /json/users", function() {
