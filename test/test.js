@@ -105,7 +105,6 @@ describe('api-gateway-localdev', function() {
     it("path without params should be preferred than with params", function(done) {
       req("GET", "/hello", "", function(res, data) {
         assert.equal(data, "hello");
-        done();
 
         req("GET", "/all", "", function(res, data) {
           assert.equal(data, "all");
