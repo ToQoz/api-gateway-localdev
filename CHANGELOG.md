@@ -1,3 +1,22 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.5...v1.0.0) (2016-05-28)
+
+
+### Bug Fixes
+
+* **api-gateway-localdev:** fix sorting routes ([8831454](https://github.com/ToQoz/api-gateway-localdev/commit/8831454))
+
+### Features
+
+* **api-gateway-localdev:** enable to define multiple responses with selectionPattern ([98e2a46](https://github.com/ToQoz/api-gateway-localdev/commit/98e2a46))
+
+
+### BREAKING CHANGES
+
+* api-gateway-localdev: .responseTemplates and .responseModels, .statusCode are removed from top-level property
+
+
+
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.4...v0.0.5) (2016-03-14)
 
