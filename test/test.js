@@ -10,79 +10,103 @@ var apiGatewayRoutes = [
     lambda: function(_, context) { context.done(null, "all"); },
     method: "GET",
     path: "/{all}",
-    statusCode: 200,
     requestTemplates: {},
-    responseTemplates: {
-      "text/plain": "$input.path('$')"
-    },
+    responses: {
+      "200": {
+        responseTemplates: {
+          "text/plain": "$input.path('$')"
+        },
+      }
+    }
   },
   {
     lambda: function(_, context) { context.done(null, "hello"); },
     method: "GET",
     path: "/hello",
-    statusCode: 200,
     requestTemplates: {},
-    responseTemplates: {
-      "text/plain": "$input.path('$')"
+    responses: {
+      "200": {
+        responseTemplates: {
+          "text/plain": "$input.path('$')"
+        },
+      }
     }
   },
   {
     lambda: lambdas.users.index,
     method: "GET",
     path: "/json/users",
-    statusCode: 200,
     requestTemplates: {},
-    responseTemplates: {},
+    responses: {
+      "200": {
+        responseTemplates: {},
+      }
+    }
   },
   {
     lambda: lambdas.users.index,
     method: "GET",
     path: "/json/users",
-    statusCode: 200,
     requestTemplates: {},
-    responseTemplates: {},
+    responses: {
+      "200": {
+        responseTemplates: {},
+      }
+    }
   },
   {
     lambda: lambdas.users.create,
     method: "POST",
     path: "/json/users",
-    statusCode: 201,
     requestTemplates: {},
-    responseTemplates: {},
+    responses: {
+      "201": {
+        responseTemplates: {},
+      }
+    }
   },
   {
     lambda: lambdas.users.show,
     method: "GET",
     path: "/json/users/{username}",
-    statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
     },
-    responseTemplates: {},
+    responses: {
+      "200": {
+        responseTemplates: {},
+      }
+    }
   },
   {
     lambda: lambdas.users.showHtml,
     method: "GET",
     path: "/html/users/{username}",
-    statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
     },
-    responseTemplates: {
-      "text/html": "<h1>$input.path('$.name')</h1>"
-    },
+    responses: {
+      "200": {
+        responseTemplates: {
+          "text/html": "<h1>$input.path('$.name')</h1>"
+        },
+      }
+    }
   },
   {
     lambda: lambdas.users.showHtml_v2,
     method: "GET",
     path: "/html/v2/users/{username}",
-    statusCode: 200,
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
     },
-    responseTemplates: {
-      "text/html": "$input.path('$')"
-    },
+    responses: {
+      "200": {
+        responseTemplates: {
+          "text/html": "$input.path('$')"
+        },
+      }
+    }
   }
 ];
 

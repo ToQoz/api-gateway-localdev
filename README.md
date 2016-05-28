@@ -21,11 +21,20 @@ var app = apiGatewayLocal(express(), [
     lambda: require("./lambda").handler,
     method: "GET",
     path: "/users/{username}",
-    statusCode: 200,
+    responses: {
+        "200": {
+          "responseTemplates": {},
+          "responseModels": {}
+        },
+        "404": {
+          "selectionPattern": ".*404.*",
+          "responseTemplates": {},
+          "responseModels": {}
+        }
+    }
     requestTemplates: {
       "application/json": '{"username": "$input.params(\'username\')"}'
     },
-    responseTemplates: {},
   }
 ]);
 
@@ -65,7 +74,11 @@ var apiGatewayLocal = require('api-gateway-localdev')
     - method - `String`
     - path - `String`
     - statusCode - `Number`
+    - responses - `map<String, map>`
+      - 'status code' e.g. "200"
+        - selectionPattern - `String`
+        - responseTemplates - `map<String, String|Buffer>`
+        - responseModels - `map<String, String|Buffer>`
     - requestTemplates - `map<String, String|Buffer>`
-    - responseTemplates - `map<String, String|Buffer>`
 - Return value
   - app

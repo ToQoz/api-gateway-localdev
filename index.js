@@ -34,6 +34,10 @@ module.exports = function(app, routes) {
   });
 
   routes.forEach(function(route) {
+    if (!('responses' in route)) {
+      throw new Error("responses is not found in route");
+    }
+
     var path = route.path
       .split("/")
       .map(function(segment) {
@@ -68,21 +72,39 @@ module.exports = function(app, routes) {
         done: function(err, obj) {
           obj = obj || "";
           var contentType, responseTemplates, responseTemplate, responseBody, statusCode;
+          var response;
+
+          // default
+          Object.keys(route.responses).forEach(function(code) {
+            var res = route.responses[code];
+            if (!res.selectionPattern) {
+              statusCode = code;
+              response = res;
+            }
+          });
 
           if (err) {
-            statusCode = 400;
-            contentType = "application/json";
-            responseTemplate = "$input.json('$')";
-            obj = {error: err.toString()};
+            // selection pattern
+            Object.keys(route.responses).forEach(function(code) {
+              var res = route.responses[code];
+              if ((new RegExp(res.selectionPattern)).test(JSON.stringify(err))) {
+                statusCode = code;
+                response = res;
+              }
+            });
+          }
+
+          responseTemplates = response.responseTemplates || {};
+          if (Object.keys(responseTemplates).length > 0) {
+            contentType = req.accepts(Object.keys(responseTemplates)) || "application/json";
           } else {
-            statusCode = route.statusCode;
-            responseTemplates = route.responseTemplates || {};
-            if (Object.keys(responseTemplates).length > 0) {
-              contentType = req.accepts(Object.keys(responseTemplates)) || "application/json";
-            } else {
-              contentType = "application/json";
-            }
-            responseTemplate = responseTemplates[contentType.toLowerCase()] || "$input.json('$')";
+            contentType = "application/json";
+          }
+          responseTemplate = responseTemplates[contentType.toLowerCase()] || "$input.json('$')";
+
+          if (err) {
+            // obj = {error: err.toString()};
+            obj = err
           }
 
           responseBody = mappingTemplate({
