@@ -1,6 +1,6 @@
 {
   "name": "api-gateway-localdev",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "simulate AWS API Gateway for dev in your local",
   "repository": {
     "type": "git",
