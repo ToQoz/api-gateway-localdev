@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/ToQoz/api-gateway-localdev/compare/v1.0.0...v1.1.0) (2016-05-28)
+
+
+### Features
+
+* **api-gateway-localdev:** add __express_{req,res} to event for debug. ([2ba4c2a](https://github.com/ToQoz/api-gateway-localdev/commit/2ba4c2a))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/ToQoz/api-gateway-localdev/compare/v0.0.5...v1.0.0) (2016-05-28)
 
