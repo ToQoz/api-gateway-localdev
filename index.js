@@ -62,8 +62,6 @@ module.exports = function(app, routes) {
           querystring: req.query
         },
       }));
-      event['__express_req'] = req; // express's request object for debug
-      event['__express_res'] = res; // express's response object for debug
       var context = {
         done: function(err, obj) {
           obj = obj || "";
@@ -121,7 +119,7 @@ module.exports = function(app, routes) {
         },
       };
 
-      route.lambda(event, context);
+      route.lambda(event, context, context.done);
     });
   });
 
