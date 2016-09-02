@@ -65,7 +65,7 @@ module.exports = function(app, routes) {
       var context = {
         done: function(err, obj) {
           obj = obj || "";
-          var contentType, responseTemplates, responseTemplate, responseBody, statusCode;
+          var contentType, responseTemplates, responseTemplate, responseHeaders, responseBody, statusCode;
           var response;
 
           // default
@@ -97,7 +97,6 @@ module.exports = function(app, routes) {
           responseTemplate = responseTemplates[contentType.toLowerCase()] || "$input.json('$')";
 
           if (err) {
-            // obj = {error: err.toString()};
             obj = err
           }
 
@@ -105,6 +104,13 @@ module.exports = function(app, routes) {
             template: responseTemplate.toString(),
             payload: JSON.stringify(obj)
           });
+
+          responseHeaders = response.responseHeaders || {};
+          Object.keys(responseHeaders).forEach(header => {
+            payload = JSON.parse(responseBody)
+            res.setHeader(header, eval('`'+responseHeaders[header]+'`'));
+          })
+
 
           res.setHeader("Content-Type", contentType);
           res
