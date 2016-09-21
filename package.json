@@ -13,7 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "api-gateway-mapping-template": "0.0.7"
+    "api-gateway-mapping-template": "github:emersonsoftware/api-gateway-mapping-template"
   },
   "devDependencies": {
     "express": "^4.13.3",
